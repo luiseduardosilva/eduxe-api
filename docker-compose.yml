@@ -1,0 +1,44 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:10
+    container_name: eduxe-postgres
+    restart: always
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_USER=eduxe
+      - POSTGRES_PASSWORD=eduxe
+      - POSTGRES_DB=eduxe
+    ports:
+      - "5432:5432"
+    networks:
+      - eduxe-network
+  php:
+    build: etc/php-fpm
+    container_name: eduxe-php
+    restart: always
+    volumes:
+      - ./:/var/www/laravel
+    networks:
+      - eduxe-network
+  nginx:
+    build: etc/nginx
+    container_name: eduxe-api
+    restart: always
+    ports:
+      - '8000:80'
+    depends_on:
+      - php
+    links:
+      - php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx
+    networks:
+      - eduxe-network
+networks:
+  eduxe-network:
+    driver: bridge
+volumes:
+  postgres-data:
+
