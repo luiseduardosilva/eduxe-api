@@ -7,7 +7,13 @@
 #### Baixar projeto
 
 ```
-git clone {$URL}
+git clone https://github.com/luiseduardosilva/eduxe-api
+```
+
+#### Docker-compose
+
+```
+docker-compose up -d
 ```
 
 
@@ -15,6 +21,11 @@ git clone {$URL}
 
 ```
 docker exec -it eduxe-php composer install
+```
+
+#### Chave Laravel
+```
+docker exec -it eduxe-php php artisan key:generate
 ```
 
 #### Copiar `.env`
